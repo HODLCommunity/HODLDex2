@@ -1,0 +1,19 @@
+{
+  "name": "hodl",
+  "version": "1.0.0",
+  "description": "HODL refactor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.2.0",
+    "@truffle/hdwallet-provider": "^1.0.40",
+    "fs": "0.0.1-security",
+    "ganache-cli": "^6.9.1",
+    "ganache-time-traveler": "^1.0.14",
+    "truffle": "^5.1.30"
+  }
+}

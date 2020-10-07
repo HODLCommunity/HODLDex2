@@ -1,0 +1,136 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"görli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"deployedBytecode": {
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"gasEstimates": null,
+		"methodIdentifiers": {
+			"allocateDistribution(uint256)": "0cc6e019",
+			"convertHodlToUsd(uint256)": "9e3202c9",
+			"convertUsdToHodl(uint256)": "947b9383",
+			"user(address)": "81e7e20e"
+		}
+	},
+	"abi": [
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "allocateDistribution",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amtHodl",
+					"type": "uint256"
+				}
+			],
+			"name": "convertHodlToUsd",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "inUsd",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amtUsd",
+					"type": "uint256"
+				}
+			],
+			"name": "convertUsdToHodl",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "inHodl",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "userAddr",
+					"type": "address"
+				}
+			],
+			"name": "user",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "balanceEth",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "balanceHodl",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "controlledHodl",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		}
+	]
+}

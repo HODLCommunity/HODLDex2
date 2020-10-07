@@ -1,0 +1,198 @@
+{
+	"compiler": {
+		"version": "0.6.6+commit.6c089d02"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "allocateDistribution",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amtHodl",
+						"type": "uint256"
+					}
+				],
+				"name": "convertHodlToUsd",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "inUsd",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amtUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "convertUsdToHodl",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "inHodl",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "userAddr",
+						"type": "address"
+					}
+				],
+				"name": "user",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "balanceEth",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "balanceHodl",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "controlledHodl",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/contracts/token/HTokenReserve.sol": "IDex"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/GSN/Context.sol": {
+			"keccak256": "0xc6fb4c940628ca2cde81ed6d20fc9ff456b60f55aafef555f43a86a2dda7ad9f",
+			"urls": [
+				"bzz-raw://f17dda58954a84ffca3d53c0b6435bad7f5c42ab3a9c4603db2f1aef00edae4e",
+				"dweb:/ipfs/QmehW99QmmzKvnqTsprsApDF7mK2JVo6nnrZ47znhLTFjh"
+			]
+		},
+		"@openzeppelin/contracts/access/AccessControl.sol": {
+			"keccak256": "0xd9f4a2f2615d49e1040e2c2b49d90351f70e06001280e402c685cffab93f5c7d",
+			"urls": [
+				"bzz-raw://6216f6a5a100d113eac48a6b3c53e11359649535b622050beda65bb166590483",
+				"dweb:/ipfs/QmUfaTP8HVZv5TutsJAFqcgzgYUkupaDTSSgyj4z3B3TMd"
+			]
+		},
+		"@openzeppelin/contracts/access/Ownable.sol": {
+			"keccak256": "0x4bd6402ca6b3419008c2b482aff54e66836e8cb4eba2680e42ac5884ae6424fc",
+			"urls": [
+				"bzz-raw://8f9f711fb8d0d92aeea1c327e3845d13ca1fa8f142e47f8723cd5b3106fb29a3",
+				"dweb:/ipfs/QmVQUReDW9f4zGqhizwHnyU8EntMs95tbASdqkGncnikba"
+			]
+		},
+		"@openzeppelin/contracts/math/SafeMath.sol": {
+			"keccak256": "0xaa0e11a791bc975d581a4f5b7a8d9c16a880a354c89312318ae072ae3e740409",
+			"urls": [
+				"bzz-raw://982d8b344f76193834260436d74c81e5a8f9e89106bb4cd72bbaabda4f3f59c2",
+				"dweb:/ipfs/QmSrvP5TkQRhKDVCTpsV3uaKLBhkt7PjUY89vdtM9o5ybK"
+			]
+		},
+		"@openzeppelin/contracts/proxy/Initializable.sol": {
+			"keccak256": "0x8eee8bd8c216a3e437bf7a4c9844348f47a2d990e5b06cd96d250e33ab04c25a",
+			"urls": [
+				"bzz-raw://c6bb2af880b12be26b148ee99ac3a984168e7fc74721bab9cd44598a0669b038",
+				"dweb:/ipfs/QmPfFDaXZbThJgaVim7nvxrw1RuD2xKWCG89K6pznmC8pJ"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+			"keccak256": "0x4daf1e5f59e8ca32aca35cffc32dede6515b06d0d7e5013cd78bb24094fad719",
+			"urls": [
+				"bzz-raw://a93703bec9d9f5e4aa3f027d5db956ce94716f58182fc53ebf90bed7968bca51",
+				"dweb:/ipfs/QmPdV3o4ADR9ABUNKwabR3GxaeGQX7xMdQur2aqEi5KnT9"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol": {
+			"keccak256": "0x657b0d90be17331364211d74359df2a734fac864f6e88c80de7626fa33090ffb",
+			"urls": [
+				"bzz-raw://09cca25fefa2354a424d55a97930c76b11dc50697ba62c85d7affc27a37e830c",
+				"dweb:/ipfs/QmPTQBYXxQDSNmMKqwe4WnM8E7NwnpLnkFLSRH8hZRvrVK"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x5c26b39d26f7ed489e555d955dcd3e01872972e71fdd1528e93ec164e4f23385",
+			"urls": [
+				"bzz-raw://efdc632af6960cf865dbc113665ea1f5b90eab75cc40ec062b2f6ae6da582017",
+				"dweb:/ipfs/QmfAZFDuG62vxmAN9DnXApv7e7PMzPqi4RkqqZHLMSQiY5"
+			]
+		},
+		"@openzeppelin/contracts/utils/Address.sol": {
+			"keccak256": "0x934dbc549a8df514456047ad1c6ab257127a03f4109272834c30e596bbe10d1d",
+			"urls": [
+				"bzz-raw://33cf247ade00a28c632dfe2c2521e1952f467c6081b89375c34b1eb297441d9b",
+				"dweb:/ipfs/QmYGNAHCtN1m3QDynteTeVCfwFZBZRpGJNMjxwVBUifnfB"
+			]
+		},
+		"@openzeppelin/contracts/utils/EnumerableSet.sol": {
+			"keccak256": "0xb2a11b236f073662f5a196995863f51c11d006bf7c3de158b316dfa1506c4b79",
+			"urls": [
+				"bzz-raw://8651649cf0b9efa18c3b01c030276fa320d41adbdc286833417e7f36e357b2f3",
+				"dweb:/ipfs/QmafhM2Nd1aP43QVB1eRRZaqRXQKswNfQcWi8U8xjrxCfN"
+			]
+		},
+		"localhost/contracts/token/HTEthUsd.sol": {
+			"keccak256": "0x2b0e634d95d150ccdf16887d8fcb7801a04ed2725015d9136fd604a5dea353a5",
+			"urls": [
+				"bzz-raw://3ce9b80294b249851a7c9b2fe5c641d792bc82af7c83ac8486e79fe02cad9d8c",
+				"dweb:/ipfs/QmWpvZ43PVq9Y33otSR4GBY9HsC2SD8jLrKyPUs9AEZC9C"
+			]
+		},
+		"localhost/contracts/token/HTokenReserve.sol": {
+			"keccak256": "0xafc0ba9960e1a0079a091d224c81fc79626a363d58b9298fc130c55af9b750ee",
+			"urls": [
+				"bzz-raw://914933a79deb6f810283a6568187ecec06e17f7d89cb6e18e1ab269b5df546dc",
+				"dweb:/ipfs/QmTT5nqyRWvpL4ie3yjneeFNfoSt1fBbaeLfm2HgQaMxQT"
+			]
+		}
+	},
+	"version": 1
+}

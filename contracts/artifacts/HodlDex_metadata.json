@@ -1,0 +1,2096 @@
+{
+	"compiler": {
+		"version": "0.6.6+commit.6c089d02"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "hodlUsdNow",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dailyAccrualRateNow",
+						"type": "uint256"
+					}
+				],
+				"name": "AccrueByTime",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "txnEth",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "txnHodl",
+						"type": "uint256"
+					}
+				],
+				"name": "BuyFromReserve",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountEth",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "lowGas",
+						"type": "uint256"
+					}
+				],
+				"name": "BuyHodlCRequested",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "userAddr",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"name": "BuyOrderCancelled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "seller",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "txnEth",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "txnHodl",
+						"type": "uint256"
+					}
+				],
+				"name": "BuyOrderFilled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "orderedId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountEth",
+						"type": "uint256"
+					}
+				],
+				"name": "BuyOrderOpened",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "seller",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "refundedEth",
+						"type": "uint256"
+					}
+				],
+				"name": "BuyOrderRefunded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "errorCount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "ethUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "EthUsdError",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "HodlDistributionAllocated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "HodlTIssued",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "HodlTRedeemed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "gasLeft",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "ordersFilled",
+						"type": "uint256"
+					}
+				],
+				"name": "IncreaseLowGas",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "transactionCount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newHodlUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "IncreasedByTransaction",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "contract IHTokenReserve",
+						"name": "tokenReserve",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "contract IHOracle",
+						"name": "oracle",
+						"type": "address"
+					}
+				],
+				"name": "InitConfigure",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "InternalTransfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "admin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "oracle",
+						"type": "address"
+					}
+				],
+				"name": "OracleSet",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleGranted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleRevoked",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "seller",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "quantityHodl",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "lowGas",
+						"type": "uint256"
+					}
+				],
+				"name": "SellHodlCRequested",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "userAddr",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"name": "SellOrderCancelled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "seller",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "txnEth",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "txnHodl",
+						"type": "uint256"
+					}
+				],
+				"name": "SellOrderFilled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "seller",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "quantityHodl",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "askUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "SellOrderOpened",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "seller",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "refundedHodl",
+						"type": "uint256"
+					}
+				],
+				"name": "SellOrderRefunded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "admin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dailyAccrualRate",
+						"type": "uint256"
+					}
+				],
+				"name": "SetDailyAccrualRate",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "setter",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "ethUsd18",
+						"type": "uint256"
+					}
+				],
+				"name": "SetEthUsd",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountEth",
+						"type": "uint256"
+					}
+				],
+				"name": "UserDepositEth",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "admin",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "hodlCR",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "ethCR",
+						"type": "uint256"
+					}
+				],
+				"name": "UserInitialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "admin",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "UserUninitialized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountEth",
+						"type": "uint256"
+					}
+				],
+				"name": "UserWithdrawEth",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "ADMIN_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "DEFAULT_ADMIN_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "ETH_ASSET",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "ETH_USD",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "HODL_ASSET",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "MIGRATION_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "ORACLE_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "RESERVE_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "accrualDaysProcessed",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IHOracle",
+						"name": "_oracle",
+						"type": "address"
+					}
+				],
+				"name": "adminSetOracle",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountHodl",
+						"type": "uint256"
+					}
+				],
+				"name": "allocateDistribution",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountEth",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lowGas",
+						"type": "uint256"
+					}
+				],
+				"name": "buyHodlC",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "buyOrder",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "bidEth",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "buyOrderCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "count",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "buyOrderFirst",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"name": "buyOrderIterate",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "idBefore",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "idAfter",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "buyOrderLast",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"name": "cancelBuy",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"name": "cancelSell",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "circulatingSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "circulating",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "claimEthDistribution",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "claimHodlDistribution",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amtEth",
+						"type": "uint256"
+					}
+				],
+				"name": "convertEthToHodl",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "inHodl",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amtEth",
+						"type": "uint256"
+					}
+				],
+				"name": "convertEthToUsd",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "inUsd",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amtHodl",
+						"type": "uint256"
+					}
+				],
+				"name": "convertHodlToEth",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "inEth",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amtHodl",
+						"type": "uint256"
+					}
+				],
+				"name": "convertHodlToUsd",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "inUsd",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amtUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "convertUsdToEth",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "inEth",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amtUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "convertUsdToHodl",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "inHodl",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "depositEth",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "assetId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "distributionAtIndex",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "denominator",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "distributionAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_period",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "assetId",
+						"type": "bytes32"
+					}
+				],
+				"name": "distributionCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "count",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "entropy_counter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "error_count",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "eth_usd_block",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getEthToUsd",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "ethUsd18",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "success",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					}
+				],
+				"name": "getRoleAdmin",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "getRoleMember",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					}
+				],
+				"name": "getRoleMemberCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "grantRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "hasRole",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "hodlTIssue",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "hodlTRedeem",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "transactionCount",
+						"type": "uint256"
+					}
+				],
+				"name": "increaseTransactionCount",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IHTokenReserve",
+						"name": "_tokenReserve",
+						"type": "address"
+					},
+					{
+						"internalType": "contract IHOracle",
+						"name": "_oracle",
+						"type": "address"
+					}
+				],
+				"name": "init",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "userAddr",
+						"type": "address"
+					}
+				],
+				"name": "initResetUser",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "rateAsDecimal18",
+						"type": "uint256"
+					}
+				],
+				"name": "initSetDailyAccrualRate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "userAddr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "hodl",
+						"type": "uint256"
+					}
+				],
+				"name": "initUser",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isAccruing",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "accruing",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isConfigured",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "initialized",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isRunning",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "running",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "userAddr",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "assetId",
+						"type": "bytes32"
+					}
+				],
+				"name": "nextUserDistributionDetails",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "balanceIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "distributionIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "closed",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "oracleContract",
+				"outputs": [
+					{
+						"internalType": "contract IHOracle",
+						"name": "_oracle",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "ethUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "oracleSetEthUsd",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "orderLimit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "limitUsd",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "period",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_period",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "poke",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "rates",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "hodlUsd",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dailyAccrualRate",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "renounceRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "revokeRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "quantityHodl",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lowGas",
+						"type": "uint256"
+					}
+				],
+				"name": "sellHodlC",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"name": "sellOrder",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "seller",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "volumeHodl",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "askUsd",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sellOrderCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "count",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sellOrderFirst",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"name": "sellOrderIterate",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "idBefore",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "idAfter",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "sellOrderLast",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "orderId",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenReserveContract",
+				"outputs": [
+					{
+						"internalType": "contract IHTokenReserve",
+						"name": "_reserve",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "userAddr",
+						"type": "address"
+					}
+				],
+				"name": "user",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "balanceEth",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "balanceHodl",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "controlledHodl",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "assetId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "userAddr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "userBalanceAtIndex",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "userBalance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "controlled",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_period",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "assetId",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "userAddr",
+						"type": "address"
+					}
+				],
+				"name": "userBalanceCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "count",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrawEth",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {
+				"getRoleAdmin(bytes32)": {
+					"details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}.     * To change a role's admin, use {_setRoleAdmin}."
+				},
+				"getRoleMember(bytes32,uint256)": {
+					"details": "Returns one of the accounts that have `role`. `index` must be a value between 0 and {getRoleMemberCount}, non-inclusive.     * Role bearers are not sorted in any particular way, and their ordering may change at any point.     * WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure you perform all queries on the same block. See the following https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post] for more information."
+				},
+				"getRoleMemberCount(bytes32)": {
+					"details": "Returns the number of accounts that have `role`. Can be used together with {getRoleMember} to enumerate all bearers of a role."
+				},
+				"grantRole(bytes32,address)": {
+					"details": "Grants `role` to `account`.     * If `account` had not been already granted `role`, emits a {RoleGranted} event.     * Requirements:     * - the caller must have ``role``'s admin role."
+				},
+				"hasRole(bytes32,address)": {
+					"details": "Returns `true` if `account` has been granted `role`."
+				},
+				"renounceRole(bytes32,address)": {
+					"details": "Revokes `role` from the calling account.     * Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced).     * If the calling account had been granted `role`, emits a {RoleRevoked} event.     * Requirements:     * - the caller must be `account`."
+				}
+			}
+		},
+		"userdoc": {
+			"methods": {
+				"adminSetOracle(address)": {
+					"notice": "************************************************************************************ An admin may change the oracle service*************************************************************************************"
+				},
+				"buyHodlC(uint256,uint256)": {
+					"notice": "************************************************************************************ Buy HodlC from sell orders, or if no sell orders, from reserve. Lastly, open a  buy order is the reserve is sold out. Selectable low gas protects against future EVM price changes. Completes as much as possible (gas) and returns unspent Eth.*************************************************************************************"
+				},
+				"cancelSell(bytes32)": {
+					"notice": "************************************************************************************ Cancel orders*************************************************************************************"
+				},
+				"circulatingSupply()": {
+					"notice": "************************************************************************************ View functions to enumerate the state*************************************************************************************"
+				},
+				"claimEthDistribution()": {
+					"notice": "************************************************************************************ Claim distributions*************************************************************************************"
+				},
+				"convertEthToUsd(uint256)": {
+					"notice": "************************************************************************************ Prices and quotes, view only.*************************************************************************************"
+				},
+				"depositEth()": {
+					"notice": "************************************************************************************ Fund Accounts*************************************************************************************"
+				},
+				"hodlTIssue(uint256)": {
+					"notice": "************************************************************************************ Convertability to HODLT USD TOKEN ERC20*************************************************************************************"
+				},
+				"init(address,address)": {
+					"notice": "************************************************************************************ Initialization functions that support data migration*************************************************************************************"
+				},
+				"oracleSetEthUsd(uint256)": {
+					"notice": "************************************************************************************ An Oracle may inject a new Eth:Usd rate*************************************************************************************"
+				},
+				"period()": {
+					"notice": "************************************************************************************ Explore the Proportional Distribution State and User Balance History*************************************************************************************"
+				},
+				"poke()": {
+					"notice": "************************************************************************************ Anyone can nudge the time-based accrual and distribution accounting periods forward*************************************************************************************"
+				},
+				"rates()": {
+					"notice": "************************************************************************************ Daily accrual and rate decay over time*************************************************************************************"
+				},
+				"sellHodlC(uint256,uint256)": {
+					"notice": "************************************************************************************ Sell HodlC to buy orders, or if no buy orders open a sell order. Selectable low gas protects against future EVM price changes. Completes as much as possible (gas) and return unprocessed Hodl.*************************************************************************************"
+				}
+			}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/contracts/HodlDex.sol": "HodlDex"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/GSN/Context.sol": {
+			"keccak256": "0xc6fb4c940628ca2cde81ed6d20fc9ff456b60f55aafef555f43a86a2dda7ad9f",
+			"urls": [
+				"bzz-raw://f17dda58954a84ffca3d53c0b6435bad7f5c42ab3a9c4603db2f1aef00edae4e",
+				"dweb:/ipfs/QmehW99QmmzKvnqTsprsApDF7mK2JVo6nnrZ47znhLTFjh"
+			]
+		},
+		"@openzeppelin/contracts/access/AccessControl.sol": {
+			"keccak256": "0xd9f4a2f2615d49e1040e2c2b49d90351f70e06001280e402c685cffab93f5c7d",
+			"urls": [
+				"bzz-raw://6216f6a5a100d113eac48a6b3c53e11359649535b622050beda65bb166590483",
+				"dweb:/ipfs/QmUfaTP8HVZv5TutsJAFqcgzgYUkupaDTSSgyj4z3B3TMd"
+			]
+		},
+		"@openzeppelin/contracts/access/Ownable.sol": {
+			"keccak256": "0x4bd6402ca6b3419008c2b482aff54e66836e8cb4eba2680e42ac5884ae6424fc",
+			"urls": [
+				"bzz-raw://8f9f711fb8d0d92aeea1c327e3845d13ca1fa8f142e47f8723cd5b3106fb29a3",
+				"dweb:/ipfs/QmVQUReDW9f4zGqhizwHnyU8EntMs95tbASdqkGncnikba"
+			]
+		},
+		"@openzeppelin/contracts/math/SafeMath.sol": {
+			"keccak256": "0xaa0e11a791bc975d581a4f5b7a8d9c16a880a354c89312318ae072ae3e740409",
+			"urls": [
+				"bzz-raw://982d8b344f76193834260436d74c81e5a8f9e89106bb4cd72bbaabda4f3f59c2",
+				"dweb:/ipfs/QmSrvP5TkQRhKDVCTpsV3uaKLBhkt7PjUY89vdtM9o5ybK"
+			]
+		},
+		"@openzeppelin/contracts/proxy/Initializable.sol": {
+			"keccak256": "0x8eee8bd8c216a3e437bf7a4c9844348f47a2d990e5b06cd96d250e33ab04c25a",
+			"urls": [
+				"bzz-raw://c6bb2af880b12be26b148ee99ac3a984168e7fc74721bab9cd44598a0669b038",
+				"dweb:/ipfs/QmPfFDaXZbThJgaVim7nvxrw1RuD2xKWCG89K6pznmC8pJ"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+			"keccak256": "0x4daf1e5f59e8ca32aca35cffc32dede6515b06d0d7e5013cd78bb24094fad719",
+			"urls": [
+				"bzz-raw://a93703bec9d9f5e4aa3f027d5db956ce94716f58182fc53ebf90bed7968bca51",
+				"dweb:/ipfs/QmPdV3o4ADR9ABUNKwabR3GxaeGQX7xMdQur2aqEi5KnT9"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol": {
+			"keccak256": "0x657b0d90be17331364211d74359df2a734fac864f6e88c80de7626fa33090ffb",
+			"urls": [
+				"bzz-raw://09cca25fefa2354a424d55a97930c76b11dc50697ba62c85d7affc27a37e830c",
+				"dweb:/ipfs/QmPTQBYXxQDSNmMKqwe4WnM8E7NwnpLnkFLSRH8hZRvrVK"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x5c26b39d26f7ed489e555d955dcd3e01872972e71fdd1528e93ec164e4f23385",
+			"urls": [
+				"bzz-raw://efdc632af6960cf865dbc113665ea1f5b90eab75cc40ec062b2f6ae6da582017",
+				"dweb:/ipfs/QmfAZFDuG62vxmAN9DnXApv7e7PMzPqi4RkqqZHLMSQiY5"
+			]
+		},
+		"@openzeppelin/contracts/utils/Address.sol": {
+			"keccak256": "0x934dbc549a8df514456047ad1c6ab257127a03f4109272834c30e596bbe10d1d",
+			"urls": [
+				"bzz-raw://33cf247ade00a28c632dfe2c2521e1952f467c6081b89375c34b1eb297441d9b",
+				"dweb:/ipfs/QmYGNAHCtN1m3QDynteTeVCfwFZBZRpGJNMjxwVBUifnfB"
+			]
+		},
+		"@openzeppelin/contracts/utils/EnumerableSet.sol": {
+			"keccak256": "0xb2a11b236f073662f5a196995863f51c11d006bf7c3de158b316dfa1506c4b79",
+			"urls": [
+				"bzz-raw://8651649cf0b9efa18c3b01c030276fa320d41adbdc286833417e7f36e357b2f3",
+				"dweb:/ipfs/QmafhM2Nd1aP43QVB1eRRZaqRXQKswNfQcWi8U8xjrxCfN"
+			]
+		},
+		"localhost/contracts/HOracle.sol": {
+			"keccak256": "0x821c95673747f3915ea61ffa673127850f73ee8c19f3a541cfddbce7f1e8f7c1",
+			"urls": [
+				"bzz-raw://184c5343a41a72ae287207dc235fc0df1a561e87a7c57bf628ce8d9142e02f7c",
+				"dweb:/ipfs/QmU7TVt4hTAW8sAis1meaPLJpbtbD5JEgieHkwbSKbdMzx"
+			]
+		},
+		"localhost/contracts/HodlDex.sol": {
+			"keccak256": "0x282878fa6d450c7d14e59a8f43054fb6092ea1d8d482b21f8617e5a1ebe57526",
+			"urls": [
+				"bzz-raw://0a7ab4b81be367e210eeb979509e94724b6999b7b7deba8746439fff0e710cde",
+				"dweb:/ipfs/QmfQZH4rZrZhhRuYmJcmYkt7GzzEbfbPh22YLtYVjJFSPU"
+			]
+		},
+		"localhost/contracts/libraries/Bytes32Set.sol": {
+			"keccak256": "0xe29cd0ecdc3f7adff8cb44541e511e875079823bd08fbd968c233c74e6924150",
+			"urls": [
+				"bzz-raw://ab541677aca73ee49ecf82ac38800aa3cde1f47d41777cc2945a2d08e391f588",
+				"dweb:/ipfs/QmZTYWWqxpMfU23Smy6AwXxhfoHZi1VgG8CS4sGYLhdrsR"
+			]
+		},
+		"localhost/contracts/libraries/FIFOSet.sol": {
+			"keccak256": "0xa6e1e8e1cc6e26f10f1f5e7e7fd3a8ea92ac238e1d9c8c1553047cc7e0fdf7fc",
+			"urls": [
+				"bzz-raw://c6986c59b29f47c127574294d601ad6f45e7e87d2d80d9baa0d5e656c0476228",
+				"dweb:/ipfs/QmQFGYRJ2J9NDK2Bea7JbiWuz9vnxqSoXxqP6a7x6JLEuC"
+			]
+		},
+		"localhost/contracts/libraries/Proportional.sol": {
+			"keccak256": "0x8db27280667cf163545dd05ac3a4b8682bd2551492a7beace5a5fcfe96615f13",
+			"urls": [
+				"bzz-raw://418b6aee5241bb05812a39e753741914c1bef979c48f7d95885d3e27e5a16135",
+				"dweb:/ipfs/QmYKByQRwj5umN793rfSoJ6NZDb3M7JNy5d3RQM6B1xqey"
+			]
+		},
+		"localhost/contracts/token/HTEthUsd.sol": {
+			"keccak256": "0x2b0e634d95d150ccdf16887d8fcb7801a04ed2725015d9136fd604a5dea353a5",
+			"urls": [
+				"bzz-raw://3ce9b80294b249851a7c9b2fe5c641d792bc82af7c83ac8486e79fe02cad9d8c",
+				"dweb:/ipfs/QmWpvZ43PVq9Y33otSR4GBY9HsC2SD8jLrKyPUs9AEZC9C"
+			]
+		},
+		"localhost/contracts/token/HTokenReserve.sol": {
+			"keccak256": "0x325837b75e35dc89221aea6f6e9313993796f69fe795e5a1a554fdea9d8c454a",
+			"urls": [
+				"bzz-raw://b7e1264f12061caf7fe500e3d055272393ffb62fbb19135f71506b87287b88e3",
+				"dweb:/ipfs/QmccB5utTHhh7ZdbcqdokkZdvfQTUjeeawpZKYYCjoj86a"
+			]
+		}
+	},
+	"version": 1
+}
