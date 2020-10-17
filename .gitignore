@@ -1,7 +1,7 @@
 .secret
 ./devnet/node1/geth/*
 ./devnet/node2/geth/*
-./node_moofules/*
+./node_modules/*
 
 # Logs
 logs

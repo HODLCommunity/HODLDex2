@@ -201,6 +201,30 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountUsd",
+						"type": "uint256"
+					}
+				],
+				"name": "burnHTEthUsd",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amtHcEthUsd",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "circulatingUsd",
 				"outputs": [
@@ -370,30 +394,6 @@
 					}
 				],
 				"name": "issueHTEthUsd",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "amtHcEthUsd",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amountUsd",
-						"type": "uint256"
-					}
-				],
-				"name": "redeemHTEthUsd",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -626,10 +626,10 @@
 			]
 		},
 		"localhost/contracts/token/HTokenReserve.sol": {
-			"keccak256": "0xafc0ba9960e1a0079a091d224c81fc79626a363d58b9298fc130c55af9b750ee",
+			"keccak256": "0x35a8ca8ed38b29e232047fa62e409f4a2f08edc245af0513d3bedbf6f0c2a6af",
 			"urls": [
-				"bzz-raw://914933a79deb6f810283a6568187ecec06e17f7d89cb6e18e1ab269b5df546dc",
-				"dweb:/ipfs/QmTT5nqyRWvpL4ie3yjneeFNfoSt1fBbaeLfm2HgQaMxQT"
+				"bzz-raw://6c7928331831461a39b22ebd35cfd5d1b932c966aff11fe6bb513b3c2b0e9c3e",
+				"dweb:/ipfs/QmWp1zqZ1XPMBFCHbmg9Brx78QrHBaetwNnNt3YT8ccWaT"
 			]
 		}
 	},

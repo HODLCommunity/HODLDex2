@@ -8,49 +8,48 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
 						"internalType": "uint256",
-						"name": "amountHodl",
+						"name": "amountUsd",
 						"type": "uint256"
 					}
 				],
-				"name": "allocateDistribution",
-				"outputs": [],
+				"name": "burnHTEthUsd",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "amtHcEthUsd",
+						"type": "uint256"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "amtHodl",
-						"type": "uint256"
-					}
-				],
-				"name": "convertHodlToUsd",
+				"inputs": [],
+				"name": "dexContract",
 				"outputs": [
 					{
-						"internalType": "uint256",
-						"name": "inUsd",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "dexAddr",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "amtUsd",
-						"type": "uint256"
-					}
-				],
-				"name": "convertUsdToHodl",
+				"inputs": [],
+				"name": "erc20Contract",
 				"outputs": [
 					{
-						"internalType": "uint256",
-						"name": "inHodl",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "erc20",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -60,26 +59,34 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "userAddr",
+						"name": "user",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountUsd",
+						"type": "uint256"
 					}
 				],
-				"name": "user",
+				"name": "issueHTEthUsd",
 				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "balanceEth",
+						"name": "amtHcEthUsd",
 						"type": "uint256"
-					},
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "tokenReserveContract",
+				"outputs": [
 					{
-						"internalType": "uint256",
-						"name": "balanceHodl",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "controlledHodl",
-						"type": "uint256"
+						"internalType": "contract IHTokenReserve",
+						"name": "_reserve",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -95,7 +102,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/contracts/token/HTokenReserve.sol": "IDex"
+			"localhost/contracts/HodlDex.sol": "IHTokenReserve"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -179,6 +186,41 @@
 				"dweb:/ipfs/QmafhM2Nd1aP43QVB1eRRZaqRXQKswNfQcWi8U8xjrxCfN"
 			]
 		},
+		"localhost/contracts/HOracle.sol": {
+			"keccak256": "0xb16657eb4e3b705f1a2e27dd2ff9930e8da9b5b15c9411ab11f726d9a24b0f66",
+			"urls": [
+				"bzz-raw://d22f94eb5fc3f3d98985d1f4ef1a6cd3a109f4cad890bd17d8bed4eb80f31598",
+				"dweb:/ipfs/QmXe8WG2Qi8FEBWeUuztDSHb2K9ifkD8CiupnFAPmbZeJD"
+			]
+		},
+		"localhost/contracts/HodlDex.sol": {
+			"keccak256": "0x50b97ab262dfd6ad415dedb8f5114cda2c429d5b344c337f6e9b838d4a79e6f5",
+			"urls": [
+				"bzz-raw://b111acd0f85bb1d1df6f022e99ded2492c7668e182712323c8e49e0b237c825b",
+				"dweb:/ipfs/QmbskgMcV44G1mNbesaqUypGkophMbr6Ag3nTovuUo89cW"
+			]
+		},
+		"localhost/contracts/libraries/Bytes32Set.sol": {
+			"keccak256": "0xe29cd0ecdc3f7adff8cb44541e511e875079823bd08fbd968c233c74e6924150",
+			"urls": [
+				"bzz-raw://ab541677aca73ee49ecf82ac38800aa3cde1f47d41777cc2945a2d08e391f588",
+				"dweb:/ipfs/QmZTYWWqxpMfU23Smy6AwXxhfoHZi1VgG8CS4sGYLhdrsR"
+			]
+		},
+		"localhost/contracts/libraries/FIFOSet.sol": {
+			"keccak256": "0xa6e1e8e1cc6e26f10f1f5e7e7fd3a8ea92ac238e1d9c8c1553047cc7e0fdf7fc",
+			"urls": [
+				"bzz-raw://c6986c59b29f47c127574294d601ad6f45e7e87d2d80d9baa0d5e656c0476228",
+				"dweb:/ipfs/QmQFGYRJ2J9NDK2Bea7JbiWuz9vnxqSoXxqP6a7x6JLEuC"
+			]
+		},
+		"localhost/contracts/libraries/Proportional.sol": {
+			"keccak256": "0x907644fc2349e14811c9dc103554589aa500749058b2daded167de423f132ea0",
+			"urls": [
+				"bzz-raw://9ee074d4667ad51448993a5b719df0edd9f87188b0b0d0c1b07da1acbd89f722",
+				"dweb:/ipfs/QmebY3LavtSSJaVZZRXrxrymZLUeyff9QD4iexUM54mrch"
+			]
+		},
 		"localhost/contracts/token/HTEthUsd.sol": {
 			"keccak256": "0x2b0e634d95d150ccdf16887d8fcb7801a04ed2725015d9136fd604a5dea353a5",
 			"urls": [
@@ -187,10 +229,10 @@
 			]
 		},
 		"localhost/contracts/token/HTokenReserve.sol": {
-			"keccak256": "0x35a8ca8ed38b29e232047fa62e409f4a2f08edc245af0513d3bedbf6f0c2a6af",
+			"keccak256": "0x3034886b278c408412b38100e6f17b1969cb039679a9d26077d45be1cca070ef",
 			"urls": [
-				"bzz-raw://6c7928331831461a39b22ebd35cfd5d1b932c966aff11fe6bb513b3c2b0e9c3e",
-				"dweb:/ipfs/QmWp1zqZ1XPMBFCHbmg9Brx78QrHBaetwNnNt3YT8ccWaT"
+				"bzz-raw://685dd6c044f149cc04d08e0ad41e3314aa231d338ab2b97d58826bb7cc325ccb",
+				"dweb:/ipfs/QmRAD9WY4gcx7B4WpPNPC8Y8jExzA9hR6kGd5qLYpJcjDW"
 			]
 		}
 	},

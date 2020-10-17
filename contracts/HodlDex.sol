@@ -45,7 +45,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
 
     bytes32 constant NULL = bytes32(0); 
     address constant UNDEFINED = address(0);
-    uint constant PRECISION = 10 ** 18;                             // Precision is 16 decimal places
+    uint constant PRECISION = 10 ** 18;                             // Precision is 18 decimal places
     uint constant TOTAL_SUPPLY = 20000000 * (10**18);               // Total supply - initially goes to the reserve, which is address(this)
     uint constant SLEEP_TIME = 30 days;                             // Grace period before time-based accrual kicks in
     uint constant DAILY_ACCRUAL_RATE_DECAY = 999999838576236000;    // Rate of decay applied daily reduces daily accrual APR to about 5% after 30 years
@@ -112,7 +112,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
     }
     
     modifier onlyReserve {
-        require(hasRole(RESERVE_ROLE, msg.sender), "HodlDex 403 migration.");
+        require(hasRole(RESERVE_ROLE, msg.sender), "HodlDex 403 reserve.");
         _; 
     }
     
@@ -126,8 +126,8 @@ contract HodlDex is IDex, Initializable, AccessControl {
         _accrueByTime();
     }
 
-    event HodlTIssued(address indexed user, uint amountUsd);
-    event HodlTRedeemed(address indexed user, uint amountUsd);
+    event HodlTIssued(address indexed user, uint amountUsd, uint anountHodl);
+    event HodlTRedeemed(address indexed user, uint amountUsd, uint amountHodl);
     event SellHodlCRequested(address indexed seller, uint quantityHodl, uint lowGas);
     event SellOrderFilled(address indexed buyer, bytes32 indexed orderId, address indexed seller, uint txnEth, uint txnHodl);
     event SellOrderRefunded(address indexed seller, bytes32 indexed orderId, uint refundedHodl);    
@@ -197,8 +197,6 @@ contract HodlDex is IDex, Initializable, AccessControl {
     function poke() public ifRunning {
         _accrueByTime();
         _setEthToUsd();
-        balance.poke(ETH_ASSET);
-        balance.poke(HODL_ASSET);
     }
 
     /**************************************************************************************
@@ -207,14 +205,14 @@ contract HodlDex is IDex, Initializable, AccessControl {
     
     function hodlTIssue(uint amountUsd) external accrueByTime ifRunning {
         uint amountHodl = tokenReserve.issueHTEthUsd(msg.sender, amountUsd);
-        emit HodlTIssued(msg.sender, amountUsd);
+        emit HodlTIssued(msg.sender, amountUsd, amountHodl);
         balance.sub(HODL_ASSET, msg.sender, amountHodl, 0);
         balance.add(HODL_ASSET, address(tokenReserve), amountHodl, 0);
     }
 
     function hodlTRedeem(uint amountUsd) external accrueByTime ifRunning {
         uint amountHodl = tokenReserve.burnHTEthUsd(msg.sender, amountUsd);
-        emit HodlTRedeemed(msg.sender, amountUsd);
+        emit HodlTRedeemed(msg.sender, amountUsd, amountHodl);
         balance.add(HODL_ASSET, msg.sender, amountHodl, 0);
         balance.sub(HODL_ASSET, address(tokenReserve), amountHodl, 0);
     }
@@ -229,12 +227,12 @@ contract HodlDex is IDex, Initializable, AccessControl {
      * Claim distributions
      **************************************************************************************/      
     
-    function claimEthDistribution() external ifRunning returns(uint amount) {
-        amount = balance.processNextUserDistribution(ETH_ASSET, msg.sender);
+    function claimEthDistribution() external ifRunning returns(uint amountEth) {
+        amountEth = balance.processNextUserDistribution(ETH_ASSET, msg.sender);
     }
     
-    function claimHodlDistribution() external ifRunning returns(uint amount) {
-        amount = balance.processNextUserDistribution(HODL_ASSET, msg.sender);
+    function claimHodlDistribution() external ifRunning returns(uint amountHodl) {
+        amountHodl = balance.processNextUserDistribution(HODL_ASSET, msg.sender);
     }
 
     /**************************************************************************************
@@ -262,7 +260,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
         uint txnHodl;
         uint ordersFilled;
 
-        while(buyOrderIdFifo.count() > 0 && quantityHodl > 0) { //
+        while(buyOrderIdFifo.count() > 0 && quantityHodl > 0) { 
             if(gasleft() < lowGas) {
                 emit IncreaseLowGas(msg.sender, gasleft(), ordersFilled);
                 return 0;
@@ -454,6 +452,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
         balance.add(HODL_ASSET, msg.sender, volHodl, 0);
         sellOrderIdFifo.remove(orderId);
         balance.sub(HODL_ASSET, orderSeller, 0, volHodl);
+        delete sellOrder[orderId];
     }
     function cancelBuy(bytes32 orderId) external ifRunning {
         BuyOrder storage o = buyOrder[orderId];
@@ -461,6 +460,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
         require(o.buyer == msg.sender, "HodlDex, not buyer.");
         balance.add(ETH_ASSET, msg.sender, o.bidEth, 0);
         buyOrderIdFifo.remove(orderId);
+        delete buyOrder[orderId];
     }
     
     /**************************************************************************************
@@ -561,7 +561,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
     function withdrawEth(uint amount) external ifRunning {
         emit UserWithdrawEth(msg.sender, amount);
         balance.sub(ETH_ASSET, msg.sender, amount, 0);
-        msg.sender.transfer(amount); 
+        msg.sender.call{ value: amount }; 
     }
 
     /**************************************************************************************
@@ -708,7 +708,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
      
     function init(IHTokenReserve _tokenReserve, IHOracle _oracle) external initializer() {
         
-        accrualDaysProcessed = accrualDaysProcessed;
+        accrualDaysProcessed = _accrualDaysProcessed;
         HODL_USD = _HODL_USD;
         DAILY_ACCRUAL_RATE = _DAILY_ACCRUAL_RATE;
 
@@ -750,7 +750,9 @@ contract HodlDex is IDex, Initializable, AccessControl {
     function initResetUser(address userAddr) external onlyMigration {
         emit UserUninitialized(msg.sender, userAddr);
         balance.add(HODL_ASSET, address(this), balance.balanceOf(HODL_ASSET, userAddr), 0);
-        if(balance.balanceOf(ETH_ASSET, userAddr) > 0) msg.sender.transfer(balance.balanceOf(ETH_ASSET, userAddr));
+        balance.sub(HODL_ASSET, userAddr, balance.balanceOf(HODL_ASSET, userAddr), 0);
+        balance.sub(ETH_ASSET, userAddr, balance.balanceOf(ETH_ASSET, userAddr), 0);
+        if(balance.balanceOf(ETH_ASSET, userAddr) > 0) msg.sender.call{ value: balance.balanceOf(ETH_ASSET, userAddr) };
     }
     
     // Revoking the last Migration_Role member starts trading (isRunning). Ensure backup ETH_USD is set.

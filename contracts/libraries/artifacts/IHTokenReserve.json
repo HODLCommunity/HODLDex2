@@ -45,59 +45,59 @@
 		},
 		"gasEstimates": null,
 		"methodIdentifiers": {
-			"allocateDistribution(uint256)": "0cc6e019",
-			"convertHodlToUsd(uint256)": "9e3202c9",
-			"convertUsdToHodl(uint256)": "947b9383",
-			"user(address)": "81e7e20e"
+			"burnHTEthUsd(address,uint256)": "aa948101",
+			"dexContract()": "c9b9f435",
+			"erc20Contract()": "a8f6c913",
+			"issueHTEthUsd(address,uint256)": "69654a7c",
+			"tokenReserveContract()": "e286bca5"
 		}
 	},
 	"abi": [
 		{
 			"inputs": [
 				{
+					"internalType": "address",
+					"name": "user",
+					"type": "address"
+				},
+				{
 					"internalType": "uint256",
-					"name": "amountHodl",
+					"name": "amountUsd",
 					"type": "uint256"
 				}
 			],
-			"name": "allocateDistribution",
-			"outputs": [],
+			"name": "burnHTEthUsd",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "amtHcEthUsd",
+					"type": "uint256"
+				}
+			],
 			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "amtHodl",
-					"type": "uint256"
-				}
-			],
-			"name": "convertHodlToUsd",
+			"inputs": [],
+			"name": "dexContract",
 			"outputs": [
 				{
-					"internalType": "uint256",
-					"name": "inUsd",
-					"type": "uint256"
+					"internalType": "address",
+					"name": "dexAddr",
+					"type": "address"
 				}
 			],
 			"stateMutability": "view",
 			"type": "function"
 		},
 		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "amtUsd",
-					"type": "uint256"
-				}
-			],
-			"name": "convertUsdToHodl",
+			"inputs": [],
+			"name": "erc20Contract",
 			"outputs": [
 				{
-					"internalType": "uint256",
-					"name": "inHodl",
-					"type": "uint256"
+					"internalType": "address",
+					"name": "erc20",
+					"type": "address"
 				}
 			],
 			"stateMutability": "view",
@@ -107,26 +107,34 @@
 			"inputs": [
 				{
 					"internalType": "address",
-					"name": "userAddr",
+					"name": "user",
 					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "amountUsd",
+					"type": "uint256"
 				}
 			],
-			"name": "user",
+			"name": "issueHTEthUsd",
 			"outputs": [
 				{
 					"internalType": "uint256",
-					"name": "balanceEth",
+					"name": "amtHcEthUsd",
 					"type": "uint256"
-				},
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "tokenReserveContract",
+			"outputs": [
 				{
-					"internalType": "uint256",
-					"name": "balanceHodl",
-					"type": "uint256"
-				},
-				{
-					"internalType": "uint256",
-					"name": "controlledHodl",
-					"type": "uint256"
+					"internalType": "contract IHTokenReserve",
+					"name": "_reserve",
+					"type": "address"
 				}
 			],
 			"stateMutability": "view",

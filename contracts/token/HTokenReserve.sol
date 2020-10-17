@@ -18,6 +18,7 @@ contract HTokenReserve is Initializable, AccessControl {
     
     using SafeMath for uint;
     bool initialized;
+    uint allocationTimer;
     IDex dex;
     HTEthUsd token;
     
@@ -26,7 +27,10 @@ contract HTokenReserve is Initializable, AccessControl {
     uint constant FREQUENCY = 500;
 
     modifier periodic {
-        if(block.number % FREQUENCY == 0) allocateSurplus();
+        if((block.number - allocationTimer) % FREQUENCY == 0) {
+            allocateSurplus();
+            allocationTimer = block.number;
+        }
         _;
     }
 
@@ -48,6 +52,7 @@ contract HTokenReserve is Initializable, AccessControl {
     
     constructor() public {
         emit Deployed(msg.sender);
+        allocationTimer = block.number;
     }
 
     function init(address dexAddr) external initializer {
@@ -77,7 +82,7 @@ contract HTokenReserve is Initializable, AccessControl {
         token.mint(user, amountUsd);
     }
     
-    function redeemHTEthUsd(address user, uint amountUsd) external ifInitialized periodic onlyDex returns(uint amtHcEthUsd) {
+    function burnHTEthUsd(address user, uint amountUsd) external ifInitialized periodic onlyDex returns(uint amtHcEthUsd) {
         amtHcEthUsd = dex.convertUsdToHodl(amountUsd);
         emit HCEthUsdRedeemed(user, amountUsd, amtHcEthUsd);
         token.burnFrom(user, amountUsd);

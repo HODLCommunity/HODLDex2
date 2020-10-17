@@ -50,10 +50,10 @@
 			]
 		},
 		"localhost/contracts/libraries/Proportional.sol": {
-			"keccak256": "0x907644fc2349e14811c9dc103554589aa500749058b2daded167de423f132ea0",
+			"keccak256": "0xc19e27405d0fdba345c06161f1f7d03f1ffdf2c60cc02d5184be8ef795db5a54",
 			"urls": [
-				"bzz-raw://9ee074d4667ad51448993a5b719df0edd9f87188b0b0d0c1b07da1acbd89f722",
-				"dweb:/ipfs/QmebY3LavtSSJaVZZRXrxrymZLUeyff9QD4iexUM54mrch"
+				"bzz-raw://52ac56ade22f45e7bfba69d3d8ffc82ceefe762bc8552135b798c90a94bf057b",
+				"dweb:/ipfs/Qma8zjSJPXC4AtHmobcfXGYYYzJ8J9M4d5vqqhkhAPqe8M"
 			]
 		}
 	},

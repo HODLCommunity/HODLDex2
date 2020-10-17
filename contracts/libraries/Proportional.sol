@@ -1,4 +1,4 @@
-pragma solidity ^0.6.6;
+pragma solidity 0.6.6;
 
 // SPDX-License-Identifier: Unlicensed
 
@@ -83,8 +83,8 @@ library Proportional {
         uint balanceCount = u.userBalances.length;
 
         uint p = period(self);
-        currentBalance = currentBalance + toBalance;
-        controlled = controlled + toControlled;
+        currentBalance = currentBalance.add(toBalance);
+        controlled = controlled.add(toControlled);
         UserBalance memory b = UserBalance({
             balance: currentBalance,  
             period: p,
