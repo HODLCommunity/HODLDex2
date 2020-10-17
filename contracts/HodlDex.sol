@@ -126,7 +126,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
         _accrueByTime();
     }
 
-    event HodlTIssued(address indexed user, uint amountUsd, uint anountHodl);
+    event HodlTIssued(address indexed user, uint amountUsd, uint amountHodl);
     event HodlTRedeemed(address indexed user, uint amountUsd, uint amountHodl);
     event SellHodlCRequested(address indexed seller, uint quantityHodl, uint lowGas);
     event SellOrderFilled(address indexed buyer, bytes32 indexed orderId, address indexed seller, uint txnEth, uint txnHodl);
