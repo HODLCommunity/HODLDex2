@@ -58,12 +58,12 @@ contract HodlDex is IDex, Initializable, AccessControl {
     uint constant DISTRIBUTION_PERIOD = 30 days;                    // Periodicity for distributions
 
     /**************************************************************************************
-     * block 11089830 values from old dex at 0x56b9d34F9f4E4A1A82D847128c1B2264B34D2fAe
+     * block 11094768 values from old dex at 0x56b9d34F9f4E4A1A82D847128c1B2264B34D2fAe
     **************************************************************************************/    
 
-    uint constant _accrualDaysProcessed = 52;                       // Days of stateful accrual applied
-    uint constant _HODL_USD = 1330556844548447879;                  // HODL:USD exchange rate last recorded
-    uint constant _DAILY_ACCRUAL_RATE = 1001892265991173797;        // Initial daily accrual is 0.19% (100.19% multiplier) which is about 100% APR
+    uint constant _accrualDaysProcessed = 54;                       // Days of stateful accrual applied
+    uint constant _HODL_USD = 1335574612014710427;                  // HODL:USD exchange rate last recorded
+    uint constant _DAILY_ACCRUAL_RATE = 1001892104261953098;        // Initial daily accrual is 0.19% (100.19% multiplier) which is about 100% APR
     uint public accrualDaysProcessed;
     uint private HODL_USD;
     uint private DAILY_ACCRUAL_RATE;

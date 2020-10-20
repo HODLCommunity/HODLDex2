@@ -109,6 +109,6 @@ dist
 .tern-port
 
 # misc 
-#.DS_Store
+.DS_Store
 build
 keep
