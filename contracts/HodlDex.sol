@@ -27,12 +27,12 @@ interface IHTokenReserve {
 
 contract HodlDex is IDex, Initializable, AccessControl {
     
-    using SafeMath for uint;                                        // OpenZeppelin safeMath utility
-    using FIFOSet for FIFOSet.Set;                                  // FIFO key sets
-    using Proportional for Proportional.System;                     // Balance management with proportional distribution 
+    using SafeMath for uint;                                       // OpenZeppelin safeMath utility
+    using FIFOSet for FIFOSet.Set;                                 // FIFO key sets
+    using Proportional for Proportional.System;                    // Balance management with proportional distribution 
     
-    IHOracle oracle;                                                // Must implement the read() view function (EthUsd18 uint256)
-    IHTokenReserve tokenReserve;                                    // The ERC20 token reserve
+    IHOracle oracle;                                               // Must implement the read() view function (EthUsd18 uint256)
+    IHTokenReserve tokenReserve;                                   // The ERC20 token reserve
     
     bytes32 constant public MIGRATION_ROLE = keccak256("Migration Role");
     bytes32 constant public RESERVE_ROLE = keccak256("Reserve Role");
