@@ -58,12 +58,12 @@ contract HodlDex is IDex, Initializable, AccessControl {
     uint constant DISTRIBUTION_PERIOD = 30 days;                    // Periodicity for distributions
 
     /**************************************************************************************
-     * block 10947395 values from old dex at 0x56b9d34F9f4E4A1A82D847128c1B2264B34D2fAe
+     * block 11089830 values from old dex at 0x56b9d34F9f4E4A1A82D847128c1B2264B34D2fAe
     **************************************************************************************/    
 
-    uint constant _accrualDaysProcessed = 31;                       // Days of stateful accrual applied
-    uint constant _HODL_USD = 1275911627294879927;                  // HODL:USD exchange rate last recorded
-    uint constant _DAILY_ACCRUAL_RATE = 1001895824040634246;        // Initial daily accrual is 0.19% (100.19% multiplier) which is about 100% APR
+    uint constant _accrualDaysProcessed = 52;                       // Days of stateful accrual applied
+    uint constant _HODL_USD = 1330556844548447879;                  // HODL:USD exchange rate last recorded
+    uint constant _DAILY_ACCRUAL_RATE = 1001892265991173797;        // Initial daily accrual is 0.19% (100.19% multiplier) which is about 100% APR
     uint public accrualDaysProcessed;
     uint private HODL_USD;
     uint private DAILY_ACCRUAL_RATE;
@@ -305,9 +305,9 @@ contract HodlDex is IDex, Initializable, AccessControl {
                     quantityHodl = quantityHodl.sub(txnHodl, "HodlDex 501");  
                 }
                 ordersFilled++;
+                _increaseTransactionCount(1);
             }          
         }
-        _increaseTransactionCount(ordersFilled);
         remainingHodl = quantityHodl;
     }
 
@@ -386,7 +386,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
                 balance.sub(ETH_ASSET, msg.sender, txnEth, 0);
                 balance.add(ETH_ASSET, orderSeller, txnEth, 0);
                 balance.add(HODL_ASSET, msg.sender, txnHodl, 0);
-                balance.sub(HODL_ASSET, orderSeller, 0, orderHodl);
+                balance.sub(HODL_ASSET, orderSeller, 0, txnHodl);
                 amountEth = amountEth.sub(txnEth, "HodlDex 503"); 
 
                 if(orderHodl == txnHodl) {
@@ -396,9 +396,9 @@ contract HodlDex is IDex, Initializable, AccessControl {
                     o.volumeHodl = o.volumeHodl.sub(txnHodl, "HodlDex 504");
                 }
                 ordersFilled++;
+                _increaseTransactionCount(1);
             }
         }
-        _increaseTransactionCount(ordersFilled);
         remainingEth = amountEth;
     }
 
