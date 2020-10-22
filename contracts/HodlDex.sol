@@ -148,7 +148,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
     event SetEthUsd(address setter, uint ethUsd18);
     event SetDailyAccrualRate(address admin, uint dailyAccrualRate);
     event EthUsdError(address sender, uint errorCount, uint ethUsd);
-    event IncreaseLowGas(address sender, uint gasLeft, uint ordersFilled);
+    event IncreaseGas(address sender, uint gasLeft, uint ordersFilled);
     event IncreasedByTransaction(address sender, uint transactionCount, uint newHodlUsd);
     event AccrueByTime(address sender, uint hodlUsdNow, uint dailyAccrualRateNow);
     event InternalTransfer(address sender, address from, address to, uint amount);
@@ -262,7 +262,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
 
         while(buyOrderIdFifo.count() > 0 && quantityHodl > 0) { 
             if(gasleft() < lowGas) {
-                emit IncreaseLowGas(msg.sender, gasleft(), ordersFilled);
+                emit IncreaseGas(msg.sender, gasleft(), ordersFilled);
                 return 0;
             }
             orderId = buyOrderIdFifo.first();
@@ -356,7 +356,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
 
         while(sellOrderIdFifo.count() > 0 && amountEth > 0) {
             if(gasleft() < lowGas) {
-                emit IncreaseLowGas(msg.sender, gasleft(), ordersFilled);
+                emit IncreaseGas(msg.sender, gasleft(), ordersFilled);
                 return 0;
             }
             orderId = sellOrderIdFifo.first();
