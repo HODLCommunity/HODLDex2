@@ -350,7 +350,9 @@ contract HodlDex is IDex, Initializable, AccessControl {
         address orderSeller;        
         uint orderEth;
         uint orderHodl;
+        uint orderAsk;
         uint txnEth;
+        uint txnUsd;
         uint txnHodl; 
         uint ordersFilled;
 
@@ -363,7 +365,8 @@ contract HodlDex is IDex, Initializable, AccessControl {
             SellOrder storage o = sellOrder[orderId];
             orderSeller = o.seller;
             orderHodl = o.volumeHodl; 
-            orderEth = _convertHodlToEth(orderHodl);
+            orderAsk = o.askUsd;
+            orderEth = _convertUsdToEth((orderHodl.mul(orderAsk)).div(PRECISION));
             
             if(orderEth == 0) {
                 // Order is now too small to fill. Refund hodl and prune.
@@ -374,10 +377,10 @@ contract HodlDex is IDex, Initializable, AccessControl {
                 }
                 delete sellOrder[orderId];
                 sellOrderIdFifo.remove(orderId);
-            } else {            
-            
+            } else {                        
                 txnEth = amountEth;
-                txnHodl = _convertEthToHodl(txnEth);
+                txnUsd = convertEthToUsd(txnEth);
+                txnHodl = txnUsd.mul(PRECISION).div(orderAsk);
                 if(orderEth < txnEth) {
                     txnEth = orderEth;
                     txnHodl = orderHodl;
@@ -604,7 +607,7 @@ contract HodlDex is IDex, Initializable, AccessControl {
         if(hodlUsdNow != HODL_USD || dailyAccrualRateNow != DAILY_ACCRUAL_RATE) { 
             HODL_USD = hodlUsdNow;
             DAILY_ACCRUAL_RATE = dailyAccrualRateNow; 
-            accrualDaysProcessed = accrualDaysProcessed.add(1); 
+            accrualDaysProcessed = accrualDaysProcessed + 1; 
             emit AccrueByTime(msg.sender, hodlUsdNow, dailyAccrualRateNow);
         } 
     }

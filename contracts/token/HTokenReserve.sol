@@ -24,12 +24,12 @@ contract HTokenReserve is Initializable, AccessControl {
     
     bytes32 constant public DEX_ROLE = keccak256("Dex Role");
     
-    uint constant FREQUENCY = 500;
+    uint constant FREQUENCY = 1 days;
 
     modifier periodic {
-        if((block.number - allocationTimer) % FREQUENCY == 0) {
+        if((block.timestamp - allocationTimer) > FREQUENCY) {
             allocateSurplus();
-            allocationTimer = block.number;
+            allocationTimer = block.timestamp;
         }
         _;
     }
@@ -52,7 +52,7 @@ contract HTokenReserve is Initializable, AccessControl {
     
     constructor() public {
         emit Deployed(msg.sender);
-        allocationTimer = block.number;
+        allocationTimer = block.timestamp;
     }
 
     function init(address dexAddr) external initializer {
