@@ -14,6 +14,7 @@
     "fs": "0.0.1-security",
     "ganache-cli": "^6.9.1",
     "ganache-time-traveler": "^1.0.14",
-    "truffle": "^5.1.30"
+    "truffle": "^5.1.30",
+    "truffle-flattener": "^1.5.0"
   }
 }

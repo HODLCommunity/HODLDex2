@@ -10,7 +10,7 @@ interface IHOracle {
    function read() external view returns(uint ethUsd18); 
 }
 
-contract HOracleTest is IHOracle {
+contract HOracle is IHOracle {
 
     IUniswap uniswap = IUniswap(0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc);
     uint constant PRECISION = 10 ** 18;
