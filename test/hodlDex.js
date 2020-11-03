@@ -256,6 +256,10 @@ contract("HodlDex", accounts => {
 
 		assert.equal(worlds[1].contractEth.toString(10), web3.utils.toWei("2", "ether"), "The contract is not holding 2 eth as expected");
 	});
+
+	// Check the Proportional State and Order Books
+	// Cancel Orders
+
 });
 
 async function startTrading() {
